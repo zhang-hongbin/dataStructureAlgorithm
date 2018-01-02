@@ -8,69 +8,56 @@
 </head>
 <body>
     <script type="text/javascript">
-        function BinaryTree() {
-            var Node = function(key) {
-                this.key = key;
-                this.left = null;
-                this.right = null;
-            }
-
-            var root = null;
-
-            var insertNode = function(node,newNode) {
-                if(newNode.key < node.key) {
-                    if(node.left === null) {
-                        node.left = newNode;
-                    } else {
-                        insertNode(node.left, newNode);
-                    }
+    var BinaryTree = function() {
+        var Node = function(key) {
+            this.key = key
+            this.left = null
+            this.right = null
+        }
+        var root = null
+        var insertNode = function(node, newNode) {
+            if (newNode.key < node.key) {
+                if (node.left === null) {
+                    node.left = newNode
                 } else {
-                    if(node.right === null) {
-                        node.right = newNode;
-                    } else {
-                        insertNode(node.right, newNode);
-                    }
+                    insertNode(node.left, newNode)
                 }
-
-            }
-
-            this.insert = function(key) {
-                var newNode = new Node(key);
-                if(root === null) {
-                    root = newNode
+            } else {
+                if (node.right === null) {
+                    node.right = newNode
                 } else {
-                    insertNode(root,newNode)
-                }
-            };
-
-            var traverseNode = function(node, feedback) {
-                if(node.key !== null) {
-                    if(node.left !== null) {
-                        traverseNode(node.left,feedback)
-                    }
-                    feedback(node);
-                    if(node.right !== null) {
-                        traverseNode(node.right,feedback)
-                    }
+                    insertNode(node.right, newNode)
                 }
             }
+        }
 
-            this.traverse = function(feedback) {
-                traverseNode(root, feedback);
+        this.insert = function(key) {
+            var newNode = new Node(key)
+            if (root === null) {
+                root = newNode
+            } else {
+                insertNode(root, newNode)
             }
-
+        }
+        var traversNode = function(node) {
+            if(node !== null) {
+                traversNode(node.left)
+                console.log(node.key)
+                traversNode(node.right)
+            }
+        }
+        this.inOrderTraver = function() {
+            traversNode(root)
+        }
+    }
+    var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13]
+    var binarytree = new BinaryTree();
+    nodes.forEach(function(key) {
+        binarytree.insert(key)
+    })
+    binarytree.inOrderTraver()
     
-        }
-
-        var nodes = [8,3,10,1,6,14,4,7,13];
-        var binaryTree = new BinaryTree();
-        nodes.forEach( function(key) {
-            binaryTree.insert(key);
-        });
-        var feedback = function(node) {
-            console.log(node.key)    
-        }
-        binaryTree.traverse(feedback);
+    
     </script>
 </body>
 </html>
