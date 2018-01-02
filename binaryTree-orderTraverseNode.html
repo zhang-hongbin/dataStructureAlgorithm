@@ -31,7 +31,7 @@
             }
         }
 
-        this.insert = function(key) {
+        this.insert1 = function(key) {
             var newNode = new Node(key)
             if (root === null) {
                 root = newNode
@@ -53,7 +53,7 @@
     var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13]
     var binarytree = new BinaryTree();
     nodes.forEach(function(key) {
-        binarytree.insert(key)
+        binarytree.insert1(key)
     })
     binarytree.inOrderTraver()
     
