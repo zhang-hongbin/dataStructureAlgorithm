@@ -68,11 +68,10 @@
 
         function findMinNum(node) {
             if (node !== null) {
-                if (node.left !== null) {
-                    findMinNum(node.left)
-                } else {
-                    console.log(node.key)
-                }    
+                while(node.left !== null) {
+                    node = node.left
+                } 
+                return node
             }
         }
 
@@ -97,6 +96,37 @@
         this.search = function(key) {
             console.log(searchNum(root, key))
         }
+        var removeNode = function(node, key) {
+            if (node === null) {
+                return null
+            }
+            if (key < node.key) {
+                node.left = removeNode(node.left, key)
+                return node
+            } else if (key > node.key) {
+                node.right = removeNode(node.right, key)
+                return node
+            } else {
+                if (node.left === null && node.right === null) {
+                    node = null
+                    return node
+                }
+                if (node.left === null) {
+                    node = node.right
+                    return node
+                } else if (node.right === null) {
+                    node = node.left
+                    return node
+                }
+                var aux = findMinNum(node.right)
+                node.key = aux.key
+                node.right = removeNode(node.right,aux.key)
+                return node;
+            }
+        }
+        this.remove = function(key) {
+            root = removeNode( root,key)
+        }
     }
     var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13]
     var binarytree = new BinaryTree();
@@ -109,10 +139,9 @@
     console.log('前序遍历结果为：')
     binarytree.preOrderTraver()
     console.log('\n')
-    console.log('最小数值为：')
-    binarytree.findMin();
-    console.log('\n')
+    
     binarytree.search(7)
+    binarytree.remove(3)
     </script>
 </body>
 </html>
