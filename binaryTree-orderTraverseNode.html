@@ -12,19 +12,68 @@
             height: 300px;
             position: relative;
         }
+
         #background {
             width: 300px;
             height: 300px;
             position: absolute;
             top: 0px;
             left: 0px;
-            background-image:url(./)
+            background-image:url('./image/background.png');
         }
-        
+
+        #cannon {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 270px;
+            left: 140px;
+            background-image: url('./image/cannnon.png')
+        }
+
+        #alien {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 20px;
+            left: 80px;
+            background-image: url('./image/alien.png')
+        }
+
+        #missile {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: 230px;
+            left: 140px;
+            background-image: url('./image/missile.png')
+        }
+
+        #explosion {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            background-image: url('./image/explosion')
+        }
     </style>
     <title>Document</title>
 </head>
 <body>
+    <div id="stage">
+        <div id="background"></div>
+        <div id="cannon"></div>
+        <div id="missile"></div>
+        <div id="alien"></div>
+        <div id="explosion"></div>
+    </div> <!--<div id="stage">-->
+    
+        <p id="output">请输入X 和Y坐标（0-300）.然后点击fire.</p>
+        <input type="text" id="input" placeholder="X...">
+        <input type="text" id="input" placeholder="Y...">
+        <button>fire</button>
+
     <script type="text/javascript">
     var BinaryTree = function() {
         var Node = function(key) {
@@ -158,6 +207,8 @@
     
     binarytree.search(7)
     binarytree.remove(3)
+
+    //Game section
     </script>
 </body>
 </html>
