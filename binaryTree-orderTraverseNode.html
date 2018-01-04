@@ -209,6 +209,115 @@
     binarytree.remove(3)
 
     //Game section
+    var guessX = 0
+    var guessY = 0
+    var shotRemaning = 8
+    var shotMade = 0
+    var gameState = ""
+    var gameWon = false
+
+    var cannon = document.querySelector("#cannon")
+    var alien = document.querySelector('#alien')
+    var missile = document.querySelector('#missile')
+    var explosion = document.querySelector('#explosion')
+
+    var inputX = document.querySelector('#inputX')
+    var inputY = document.querySelector('#inputY')
+    var output = document.querySelector('#output')
+
+    var button = document.querySelector('button')
+    button.style.cursor = "pointer"
+    button.addEventListener('click', clickHandler, false)
+    window.addEventListener('keydown', keydownHandler, false)
+
+    function clickHandler() {
+        validateInput()
+    }
+
+    function keydownHandler() {
+        validateInput()
+    }
+
+    function validateInput() {
+        guessX = parseInt(inputX.value)
+        guessY = parseInt(inputY.value)
+
+        if (isNaN(guessX) || isNaN(guessY)) {
+            output.innerHTML = "请输入坐标"
+        }
+        else if (guessX > 300 || guessY > 300) {
+            output.innerHTML = "坐标不能大于 300."
+        } else {
+            playGame()
+        }
+    }
+
+    function playGame() {
+        shotRemaning = shotRemaning - 1
+        shotsMade = shotsMade + 1
+        gameState = "炮弹：" + " , 数量：" + shotRemaning
+
+        guessX = parseInt(inputX.value)
+        guessY = parseInt(inputY.value)
+        var alienNode = binaryTree.search(guessX)
+        if (alienNode !== null && alienNode.selected === true) {
+            if (guessY > alienY && guessY <= alienY + 20) {
+                gameWon = true
+                endGame()
+            }
+        } else {
+            output.innerHTML = "没有击中！" + "<br>" + gameState
+            if (shotRemaning < 1) {
+                endGame()
+            }
+        }
+
+        if (!gameWon) {
+            nodesForAlien[alienNodeSelect].selected = false
+            alienNodeSelect = Math.floor(Math.random() * 9)
+            nodesForAlien[alienNodeSelect].selected = true
+            alienX = nodesForAlien[alienNodeSelect].key
+            alienY += 30;
+        }
+
+        render();
+        console.log("X: " + alienX)
+        console.log("Y:" + alienY)
+    }
+        function render() {
+            alien.style.left = alienX + 'px'
+            alien.style.top = alienY + 'px'
+
+            cannon.style.left = guessX + 'px'
+            
+            missile.style.left = guessX + 'px'
+            missile.style.top = guessY + 'px'
+
+            if (gameWon) {
+                explosion.style.display = 'block'
+                explosion.style.left = alientX + 'px'
+                explosion.style.top = alientY + 'px'
+
+                alient.style.display = 'none'
+                missile.style.display = 'none'
+            }
+        }
+
+        function endGame() {
+            if (gameWon) {
+                output.innerHTML = 'Hit! 你拯救了地球' + '<br>' + '你发射了炮弹' + shotMade + "枚."
+            } else {
+                output.innerHTML = "失败了！" + "<br>" + "地球被外星人侵略!"
+            }
+
+            button.removeEventListener('click', clickHandler, false)
+            button.disabled = true
+
+            window.removeEventListener('keydown', keydownHandler, false)
+            inputX.disabled = true
+            inputY.disabled = true
+        }
+
     </script>
 </body>
 </html>
